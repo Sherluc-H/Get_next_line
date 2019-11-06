@@ -18,45 +18,49 @@ int main(void)
 	// i = get_next_line(fd, &str);
 	// printf("\n->fd1 i = %d, str=%s\n", i, str);
 
-	i = get_next_line(fd, &str);
-	printf("\n->fd1 i = %d, str=%s\n", i, str);
-	i =	get_next_line(fd2, &str);
-	printf("\n->fd2 i = %d, str=%s\n", i, str);
-		i =	get_next_line(fd2, &str);
-	printf("\n->fd2 i = %d, str=%s\n", i, str);
-		i =	get_next_line(fd2, &str);
-	printf("\n->fd2 i = %d, str=%s\n", i, str);
-		i =	get_next_line(fd2, &str);
-	printf("\n->fd2 i = %d, str=%s\n", i, str);
+	// i = get_next_line(fd, &str);
+	// printf("\n->fd1 i = %d, str=%s\n", i, str);
+	// i =	get_next_line(fd2, &str);
+	// printf("\n->fd2 i = %d, str=%s\n", i, str);
+	// 	i = get_next_line(fd, &str);
+	// printf("\n->fd1 i = %d, str=%s\n", i, str);
+	// 	i = get_next_line(fd, &str);
+	// printf("\n->fd1 i = %d, str=%s\n", i, str);
+	// 	i =	get_next_line(fd2, &str);
+	// printf("\n->fd2 i = %d, str=%s\n", i, str);
+	// 	i =	get_next_line(fd2, &str);
+	// printf("\n->fd2 i = %d, str=%s\n", i, str);
+	// 	i =	get_next_line(fd2, &str);
+	// printf("\n->fd2 i = %d, str=%s\n", i, str);
 	
-	i = get_next_line(fd, &str);
-	printf("\n->fd1 i = %d, str=%s\n", i, str);
-		i = get_next_line(fd3, &str);
-	printf("\n->fd3 i = %d, str=%s\n", i, str);
-	i = get_next_line(fd, &str);
-	printf("\n->fd1 i = %d, str=%s\n", i, str);
-		i =	get_next_line(fd2, &str);
-	printf("\n->fd2 i = %d, str=%s\n", i, str);
-			i = get_next_line(fd, &str);
-	printf("\n->fd1 i = %d, str=%s\n", i, str);
-			i = get_next_line(fd3, &str);
-	printf("\n->fd3 i = %d, str=%s\n", i, str);
-			i = get_next_line(fd3, &str);
-	printf("\n->fd3 i = %d, str=%s\n", i, str);
+	// i = get_next_line(fd, &str);
+	// printf("\n->fd1 i = %d, str=%s\n", i, str);
+	// 	i = get_next_line(fd3, &str);
+	// printf("\n->fd3 i = %d, str=%s\n", i, str);
+	// i = get_next_line(fd, &str);
+	// printf("\n->fd1 i = %d, str=%s\n", i, str);
+	// 	i =	get_next_line(fd2, &str);
+	// printf("\n->fd2 i = %d, str=%s\n", i, str);
+	// 		i = get_next_line(fd, &str);
+	// printf("\n->fd1 i = %d, str=%s\n", i, str);
+	// 		i = get_next_line(fd3, &str);
+	// printf("\n->fd3 i = %d, str=%s\n", i, str);
+	// 		i = get_next_line(fd3, &str);
+	// printf("\n->fd3 i = %d, str=%s\n", i, str);
 
 
 		// get_next_line(fd2, &str);
 		// get_next_line(fd, &str);
 		// get_next_line(fd2, &str);
 
-	// while ((i=get_next_line(0, &str)))
-	// {
-	// 	printf("i = %d, str=%s\n", i, str);
-	// 	free(str);
-	// 	str = NULL;
-	// }
-	// printf("i = %d, str=%s\n", i, str);
-	// free(str);
-	// str = NULL;
+	while ((i=get_next_line(0, &str)) > 0)
+	{
+		printf("i = %d, str=%s\n", i, str);
+		free(str);
+		str = NULL;
+	}
+	printf("i = %d, str=%s\n", i, str);
+	free(str);
+	str = NULL;
 	return (1);
 }
