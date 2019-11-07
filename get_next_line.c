@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 14:37:51 by lhuang            #+#    #+#             */
-/*   Updated: 2019/11/07 16:29:07 by lhuang           ###   ########.fr       */
+/*   Updated: 2019/11/07 18:36:49 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,22 +80,31 @@ int			ft_free_fd(t_fd_list **fd_list, int fd)
 	return (-1);
 }
 
-int			ft_return(int rd, int end_line, t_fd_list **fd_list, int fd)
+int			ft_read(int end_line, t_fd_list **fd_list,
+			t_fd_list **current, char **line)
 {
+	char	*b;
+	int		rd;
+
+	rd = 0;
+	if (!(b = malloc(sizeof(char) * BUFFER_SIZE)))
+		return (-1);
+	while (!end_line && (rd = read((*current)->fd, b,
+	BUFFER_SIZE)) > 0 && end_line != -1)
+		end_line = ft_cut_line(b, current, &rd, line);
+	free(b);
 	if (rd == 0 && !end_line)
 	{
-		ft_free_fd(fd_list, fd);
+		ft_free_fd(fd_list, (*current)->fd);
 		return (0);
 	}
 	else if (rd < 0 || end_line == -1)
-		return (ft_free_fd(fd_list, fd));
+		return (ft_free_fd(fd_list, (*current)->fd));
 	return (1);
 }
 
 int			get_next_line(int fd, char **line)
 {
-	int					rd;
-	char				b[BUFFER_SIZE];
 	static t_fd_list	*fd_list = NULL;
 	t_fd_list			*current;
 	int					end_line;
@@ -106,15 +115,16 @@ int			get_next_line(int fd, char **line)
 	end_line = 0;
 	if (!(current = ft_search_fd(&fd_list, fd)))
 		return (ft_free_fd(&fd_list, fd));
-	if (current->remain_size > 0)
-		ft_cut_remain(current->remain, &current, &end_line, line);
-	else
+	if (fd >= 0)
 	{
-		if (!(*line = malloc(sizeof(char) * 1)))
-			return (ft_free_fd(&fd_list, fd));
-		(*line)[0] = '\0';
+		if (current->remain_size > 0)
+			ft_cut_remain(current->remain, &current, &end_line, line);
+		else
+		{
+			if (!(*line = malloc(sizeof(char) * 1)))
+				return (ft_free_fd(&fd_list, fd));
+			(*line)[0] = '\0';
+		}
 	}
-	while (!end_line && (rd = read(fd, b, BUFFER_SIZE)) > 0 && end_line != -1)
-		end_line = ft_cut_line(b, &current, &rd, line);
-	return (ft_return(rd, end_line, &fd_list, fd));
+	return (ft_read(end_line, &fd_list, &current, line));
 }
