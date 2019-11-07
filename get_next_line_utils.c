@@ -6,23 +6,11 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 14:38:09 by lhuang            #+#    #+#             */
-/*   Updated: 2019/11/06 15:16:03 by lhuang           ###   ########.fr       */
+/*   Updated: 2019/11/07 16:24:15 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-// void		ft_print_fd(t_fd_list **fd_list)
-// {
-// 	t_fd_list *current;
-
-// 	current = *fd_list;
-// 	while (current)
-// 	{
-// 		printf("\tfd = %d", current->fd);
-// 		current = current->next_fdl;
-// 	}
-// }
 
 char		*ft_merge(char *s1, char *s2, int s1_size, int s2_size)
 {
@@ -88,79 +76,44 @@ int			ft_create_remain(t_fd_list **current, int i, int end_line, char *b)
 			j++;
 		}
 		t[j] = '\0';
+		free((*current)->remain);
 		(*current)->remain = t;
-		(*current)->remain_size = j;//verifier que cest exact 100%
+		(*current)->remain_size = j;
+		return (1);
 	}
-	else
-	{
-		(*current)->remain = NULL;
-		(*current)->remain_size = 0;
-	}
+	free((*current)->remain);
+	(*current)->remain = NULL;
+	(*current)->remain_size = 0;
 	return (1);
 }
-
-//pas a la norm
-// int			ft_cut_line(char *b, t_fd_list **current, int *rd, char **str1)
-// {
-// 	int		i;
-// 	int		end_line;
-// 	char	*str2;
-
-// 	i = 0;
-// 	end_line = 0;
-// 	if (!(str2 = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-// 		return (-1);
-// 	while (i < *rd && !end_line)
-// 	{
-// 		if (b[i] == '\n')
-// 			end_line = 1;
-// 		str2[i] = b[i];
-// 		if (end_line)
-// 		{
-// 			str2[i] = '\0';
-// 			*str1 = ft_strjoin(*str1, str2);
-// 		}
-// 		else if (i == *rd - 1)
-// 		{
-// 			str2[i + 1] = '\0';
-// 			*str1 = ft_strjoin(*str1, str2);
-// 			return (0);
-// 		}
-// 		i++;
-// 	}
-// 	(*current)->remain_size = *rd;
-// 	if ((ft_create_remain(current, i, end_line, b)) == -1)
-// 		return (-1);
-// 	return (1);
-// }
-
-// a la norme
 
 int			ft_cut_line(char *b, t_fd_list **current, int *rd, char **str1)
 {
 	int		i;
-	int		end_line;
 	char	*str2;
 
 	i = 0;
-	end_line = 0;
 	if (!(str2 = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-	while (i < *rd && !end_line)
+	while (i < *rd)
 	{
 		str2[i] = b[i];
-		if (b[i] == '\n' || i == *rd - 1)
+		if (b[i] == '\n')
 		{
-			end_line = i == *rd - 1 ? 0 : 1;
-			str2[i + (i == *rd - 1 ? 1 : 0)] = '\0';
+			str2[i] = '\0';
 			*str1 = ft_strjoin(*str1, str2);
-			if (i == *rd - 1)
-				return (0);
+			(*current)->remain_size = *rd;
+			return ((ft_create_remain(current, i + 1, 1, b)));
+		}
+		else if (i == *rd - 1)
+		{
+			str2[i + 1] = '\0';
+			*str1 = ft_strjoin(*str1, str2);
+			return (0);
 		}
 		i++;
 	}
-	(*current)->remain_size = *rd;
-	return (ft_create_remain(current, i, end_line, b));
+	return (-1);
 }
 
 int			ft_cut_remain(char *b, t_fd_list **current,
@@ -170,9 +123,9 @@ int			ft_cut_remain(char *b, t_fd_list **current,
 	char	*str2;
 
 	i = 0;
-	if (!(str2 = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+	if (!(str2 = malloc(sizeof(char) * ((*current)->remain_size + 1))))
 		return (-1);
-	while (i < BUFFER_SIZE && !*end_line)
+	while (i < (*current)->remain_size && !*end_line)
 	{
 		if (b[i] == '\n')
 			*end_line = 1;
