@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/02 14:37:51 by lhuang            #+#    #+#             */
-/*   Updated: 2019/11/07 19:09:06 by lhuang           ###   ########.fr       */
+/*   Created: 2019/11/07 19:10:25 by lhuang            #+#    #+#             */
+/*   Updated: 2019/11/08 14:54:49 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void		ft_add_fd(t_fd_list **fd_list, t_fd_list *new_fd)
 {
